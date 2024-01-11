@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="description" content="Jarell Ow Yong's portfolio.">
+   <title>Tutorial: Simple Spotify Web API</title>
+   <!-- font icons -->
+   <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
+   <!-- Bootstrap + Steller  -->
+   <link rel="stylesheet" href="assets/css/steller.css">
+   <style>
+      pre {
+         padding: 0;
+         margin: 0;
+         box-sizing: border-box;
+       }
+   </style>
+</head>
+<body>
+
+   <!-- Page Header -->
+   <header class="header header-mini"> 
+      <div class="header-title">Simple Spotify Web Api Tutorial</div> 
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href=index.html>Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tutorial: Spotify Web Api</li>
+         </ol>
+      </nav>
+   </header> <!-- End Of Page Header -->
+
+   <!-- main content -->
+   <div class="container">
+
+      <h3 class="mt-5">Introduction</h3>
+      <p> Spotify's Web API provides developers with a powerful set of tools to interact with the music streaming service programmatically. In this tutorial, we'll explore the basics of setting up and utilizing Spotify's Web API using Golang, a versatile programming language. We'll also delve into the Gorilla/Mux library, a popular router and dispatcher for building robust web applications in Golang.</p>
+      
+      <h3 class="mt-5"> Prerequisites</h3>
+      <p> Before we begin, ensure that you have the following prerequisites installed on your system:
+
+         <br>Golang: Visit <a href="https://golang.org/dl/"> Golang </a> for installation instructions.
+         <br>A Spotify Developer Account: Create one at <a href="https://developer.spotify.com/dashboard/"> Spotify. </a> 
+      </p>
+
+      <h3 class="mt-5"> Setting up Spotify Web Api </h3>
+      <p></p>
+      <h6> 1. Create the Spotify App: </h6>
+      <u1> 
+         <li>Log in to your Spotify Developer Dashboard.</li>
+         <li>Create a new app to obtain the client ID and client secret.</li>
+      </u1>
+      <p></p>
+         
+      <h6> 2. Obtain the API Credentials: </h6> 
+      <u1> 
+         <li>After creating the app, note down the client ID and client secret.</li>
+         <li>Set the Redirect URI in the app settings (e.g., http://localhost:8080/callback).</li>
+      </u1>
+      <p></p>
+
+      <h6> 3. Authentication Flows: </h6> 
+      <u1> 
+         <li>Implement the Authorization Code Flow to obtain an access token.</li>
+         <li>Exchange the authorization code for an access token using Golang's net/http package.</li>
+      </u1>
+      <p></p>
+
+      <h3 class="mt-5"> Using Gorilla/Mux for Routing: </h3>
+      <h6> 1. Install Gorilla/Mux: </h6>
+      <u1> 
+         <li>Open your terminal and run:</li>
+            <code>
+               go get -u github.com/gorilla/mux
+            </code>
+      </u1>
+      <p></p>
+
+      <h6> 2. Create a Simple Server: </h6>
+      <u1> 
+         <li>Set up a basic Golang server using Gorilla/Mux:</li>
+         <pre>
+         <code>
+   package main
+   import (
+      "github.com/gorilla/mux"
+      "net/http"
+   )
+
+   func main() {
+      spotifyAuthenticator.SetAuthInfo(clientID, clientSecret)
+      router := mux.NewRouter()
+
+      // Define your routes here
+      handler.SetupRoutes(r)
+
+      http.Handle("/", r)
+      fmt.Println("Server is listening on :8080")
+      http.ListenAndServe(":8080", nil)
+   }
+         </code>
+         </pre>
+      </u1>
+      <h6> Using the clientID and clientSecret retrieved from Spotify, we are able to
+         establish a connection. Next, we're going to retrieve the access token
+      that will be used to access Spotify's API. </h6>
+      <pre><code> client, err := spotifyAuthenticator.Token(state, r)</code></pre>
+      <h6> After establishing a connection, we're in! Now we can get some data from
+         Spotify via <a href="https://github.com/zmb3/spotify"> Go wrapper  </a>
+      </h6>
+      <p></p>
+
+      <h3 class="mt-5"> Handle Spotify API Requests: </h3>
+      <h6> 3. Get Spotify ID. </h6>
+      <h6> Now that we've established a connection with Spotify's API, you can start playing 
+         around with the API. Let's do a simple one such as getting your playlists. 
+         <br>
+         Firstly, we need to get your Spotify ID. We can do a simply get CurrentUser() 
+         <pre><code>   
+   client, _ := client.CurrentUser()
+   userId := client.ID 
+         </code></pre>
+      <h6> Once retrieving userID, getting your playlist is just a simple</h6>
+      <pre><code>   
+   client, _ := client.GetPlaylistForUser(userId)
+         </code></pre>
+
+      
+      <h3 class="mt-5"> Conclusion</h3>
+      <h6> That's all for the simple Spotify API! You can refer to my github repo for more 
+         indepth look on how I've used Spotify's Web API to <a href="https://github.com/jarelloy/spotify-playlist-generator"> 
+         create a playlist from a random genre!</a>
+      </h6>
+
+      <div class="py-5"></div>
+   <!-- core  -->
+    <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
+   <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+
+    <!-- steller js -->
+    <script src="assets/js/steller.js"></script>
+
+</body>
+</html>

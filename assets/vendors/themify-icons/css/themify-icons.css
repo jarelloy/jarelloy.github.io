@@ -983,6 +983,9 @@
 .ti-github:before {
 	content: "\e73f";
 }
+.ti-linkedin:before {
+	content: "\e735";
+}
 .ti-flickr:before {
 	content: "\e740";
 }
