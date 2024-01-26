@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="description" content="Jarell Ow Yong's portfolio.">
+   <title>Tutorial: Golang Profiling Tool</title>
+   <!-- font icons -->
+   <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
+   <!-- Bootstrap + Steller  -->
+   <link rel="stylesheet" href="assets/css/steller.css">
+   <style>
+      pre {
+         padding: 0;
+         margin: 0;
+         box-sizing: border-box;
+       }
+       code {
+         font-family: Consolas,"courier new";
+         color: crimson;
+         background-color: #f1f1f1;
+         padding: 2px;
+         font-size: 100%;
+      }
+   </style>
+</head>
+<body>
+
+   <!-- Page Header -->
+   <header class="header header-mini"> 
+      <div class="header-title">Exploring Go's Profiling Magic: A Guide to pprof</div> 
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tutorial: Spotify Web Api</li>
+         </ol>
+      </nav>
+   </header> <!-- End Of Page Header -->
+
+   <!-- main content -->
+   <div class="container">
+
+      <h3 class="mt-5">Introduction</h3>
+      <p> Go, also known as Golang, is a programming language designed for simplicity and efficiency. One of the language's standout features is its built-in support for profiling through the pprof package. Profiling is a crucial aspect of optimizing and understanding the performance of your Go applications. In this blog post, we'll dive into the world of pprof, exploring what it is and how you can leverage it to identify bottlenecks and optimize your Go code.</p>
+      
+      <h3 class="mt-5">What is pprof?</h3>
+      <p> Pprof, short for "performance profile," is a powerful tool included in the Go standard library that allows developers to profile and analyze the runtime behavior of their applications. It provides insights into CPU usage, memory allocation, and other performance-related metrics. Go's pprof package is incredibly versatile, offering both in-depth analysis and an easy-to-use interface.</p>
+      
+      <h3 class="mt-5"> Context</h3>
+      <p> Have you ever wondered why your application might be experiencing memory leaks or faced the perplexing mystery of Kubernetes showing an "OOMKilled" message? By using pprof, you will have a better understanding of the runtime behavior of the applications. This allows optimization for resources and enhance overall performance stability of the application. </p>
+
+      <img src="assets/imgs/kubernetes-oom.jpg" alt ="kubernetes-oom">
+
+      <h3 class="mt-5"> Getting Started with pprof: </h3>
+      <p></p>
+      <h6> 1. Import the pprof Package: </h6>
+      <u1> 
+         <li>To start, you will first need to import the 'net/http/pprof' package.</li>
+      </u1>
+      <p></p>
+         
+      <h6> 2. Expose pprof Endpoints: </h6> 
+      <u1> 
+         <li>Next, expose the pprof endpoints through the HTTP servers. This can be done by registering a random pprof handlers in your application router.</li>
+         <li>For example, the pprof endpoints in the example below are `/pprof-example'.</li>
+      </u1>
+      <p></p>
+      
+      <img src="assets/imgs/pprof-1.jpg" alt ="pprof-1">
+      <p></p>
+
+      <h6> 3. Generate CPU Profile: </h6> 
+      <u1> 
+         <li>Run your application and perform the actions you want to profile. </li>
+         <li>Once the application is running, <code>curl http://localhost:3000/pprof-example</code> to start the application.</li>
+      </u1>
+      <p></p>
+
+      <h6> 4. Simulate the application: </h6> 
+      <u1> 
+         <li>You can simulate the application by running a large number of requests. </li>
+         <code>ab -n 1000 -c 10 http://localhost:3000/pprof-example</code>
+         <li>This simulates the application running 1000 times.</li>
+         <li>Lastly, run <code>go tool pprof http://localhost:8080/debug/pprof/heap</code> in another terminal window to start the pprof session.</li>
+         <li>This opens an interactive shell for analyzing the memory profile. The pprof tool provides various commands for you to interact with.</li>
+      </u1>
+      <pre> 
+   // Here are some of the commands for pprof
+   - top: //shows the functions that allocates the most memory
+   - list: //return the source code for a specific function. Eg, list pprofExample
+   - web: //opens a web browser, showing a graph of the memory allocation and function calls
+      </pre>
+      <p></p>
+
+      <h6> 5. Examining the result: </h6> 
+      <u1> 
+         <li>Lets take a look at the result. </li>
+         <li>We'll firstly use the <code>top</code>command to see the highest usage.</li>
+      </u1>
+      <img src="assets/imgs/pprof-2.jpg" alt ="pprof-2">
+      <u1> 
+         <li>We can see that <code>net/http.Header.Clone</code> uses the highest consumption at 512.17kB with 33.34% of the total application</li>
+         <li>Next, we can use the <code>web</code> command to see with a graphical image</li>
+      </u1>
+      <img src="assets/imgs/pprof-3.jpg" alt ="pprof-3">
+      <p></p>
+
+      <h6> 6. Bonus: </h6> 
+      <u1> 
+         <li>We can add extra variables to configure different for profiling.</li>
+         <li>For example, <code>go tool pprof -inuse_space http://localhost:8080/debug/pprof/heap</code></li>
+         <pre>
+
+   inuse_space: Amount of memory allocated and not released yet (Important).
+   inuse_objects: Amount of objects allocated and not released yet.
+   alloc_space: Total amount of memory allocated (regardless of released).
+   alloc_objects: Total amount of objects allocated (regardless of released).
+         </pre>
+      </u1>
+
+      <h3 class="mt-5"> Conclusion</h3>
+      <h6> Go's pprof package provides a robust and easy-to-use profiling mechanism for understanding and optimizing your applications. Whether you're dealing with CPU bottlenecks or analyzing memory usage, pprof equips you with the tools needed to gain valuable insights into your Go code's performance. By incorporating pprof into your development workflow, you can identify and address performance issues, ensuring your Go applications run efficiently and smoothly.</a>
+      </h6>
+      <p></p>
+      <h5> Reference:
+         <a href="https://www.codereliant.io/memory-leaks-with-pprof/">Debug Golang Memory Leaks with Pprof</a>
+      </h5>
+
+      <div class="py-5"></div>
+   <!-- core  -->
+    <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
+   <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+
+    <!-- steller js -->
+    <script src="assets/js/steller.js"></script>
+
+</body>
+</html>
