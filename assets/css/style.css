@@ -1,3 +1,4 @@
+/* Local fonts */
 @font-face {
   font-family: 'DancingScript';
   src: url('assets/DancingScript-Regular.ttf') format('truetype');
@@ -5,9 +6,10 @@
 
 @font-face {
   font-family: 'PlayfairDisplay';
-  src: url('../fonts/PlayfairDisplay-Regular.ttf') format('truetype');
+  src: url('assets/PlayfairDisplay-Regular.ttf') format('truetype');
 }
 
+/* Base layout */
 body {
   margin: 0;
   background-color: #f9f3ef;
@@ -18,7 +20,7 @@ body {
 
 header {
   text-align: center;
-  padding: 60px 20px 30px;
+  padding: 60px 20px 20px;
   font-family: 'DancingScript', cursive;
 }
 
@@ -29,71 +31,61 @@ header h1 {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
+.subtitle {
+  font-family: 'PlayfairDisplay', serif;
+  font-style: italic;
+  margin-top: 10px;
+  color: #7a5c50;
+  font-size: 1.1rem;
+}
+
 .gallery {
   position: relative;
   width: 100%;
-  height: 300vh; /* Long scroll */
+  height: 300vh; /* scroll length */
 }
 
+/* Polaroid photo container */
 .photo {
   position: sticky;
-  top: 10%; /* Slightly higher for better stacking */
+  top: 15%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  transform-origin: center;
   opacity: 0;
-  transform: scale(0.95) translateY(30px);
+  transform-origin: center;
   transition: opacity 1s ease, transform 1s ease;
-  z-index: 0;
 }
 
+.frame {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transform: rotate(var(--rotation));
+}
 
 .photo img {
   width: 320px;
   height: 380px;
   object-fit: cover;
-  border: 10px solid white;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 .caption {
   text-align: center;
-  margin-top: 15px;
   font-style: italic;
-  font-size: 1.1rem;
-  background: rgba(249, 243, 239, 0.9);
-  padding: 6px 12px;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.gallery {
-  position: relative;
-  width: 100%;
-  height: 350vh; /* give more scroll room */
+  margin-top: 10px;
 }
 
 .photo.visible {
   opacity: 1;
-  transform: scale(1) translateY(0) rotate(var(--rotation));
-  z-index: 2;
+  transform: scale(1) rotate(var(--rotation));
 }
 
-.photo.fade-out {
+.photo.hidden {
   opacity: 0;
-  transform: scale(0.95) translateY(-30px);
-  z-index: 0;
-}
-
-footer {
-  text-align: center;
-  padding: 100px 20px;
-  font-size: 1.3rem;
-  font-style: italic;
-  color: #4b2e22;
+  transform: scale(0.95);
 }
 
 /* Floating hearts animation */
@@ -102,10 +94,21 @@ footer {
   color: #e5989b;
   font-size: 1.5rem;
   animation: floatUp 6s linear infinite;
-  opacity: 0.7;
+  opacity: 0.8;
+  z-index: 9999;
+  pointer-events: none;
 }
 
 @keyframes floatUp {
   from { transform: translateY(0) scale(1); opacity: 1; }
   to { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 100px 20px 60px;
+  font-size: 1.3rem;
+  font-style: italic;
+  color: #4b2e22;
 }
