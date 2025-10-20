@@ -1,26 +1,22 @@
+// IntersectionObserver for photo reveal animation
 const photos = document.querySelectorAll('.photo');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    const current = entry.target;
 
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
     if (entry.isIntersecting) {
-      // Fade in current
-      current.classList.add('visible');
-      current.classList.remove('fade-out');
-
-      // Fade out the previous one
-      const prev = Array.from(photos).indexOf(current) - 1;
-      if (prev >= 0) {
-        photos[prev].classList.remove('visible');
-        photos[prev].classList.add('fade-out');
-      }
+      entry.target.classList.add('visible');
+      entry.target.classList.remove('hidden');
+    } else {
+      // Hide photo when it leaves viewport (scrolling back up)
+      entry.target.classList.remove('visible');
+      entry.target.classList.add('hidden');
     }
   });
-}, { threshold: 0.6 });
+}, { threshold: 0.6 }); // Trigger when 60% of the element is visible
 
-photos.forEach((photo) => observer.observe(photo));
+photos.forEach(photo => observer.observe(photo));
 
-// Floating hearts animation (unchanged)
+// Floating hearts animation
 setInterval(() => {
   const heart = document.createElement('div');
   heart.className = 'heart';
